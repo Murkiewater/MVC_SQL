@@ -13,20 +13,8 @@ return new class extends Migration
     {
         // юзеры
         Schema::table('users', function(Blueprint $table) {
-            // $table->bigIncrements('id')->change();
             $table->renameColumn('name', 'full_name');
-            $table->dropColumn(['email', 'email_verified_at', 'password', 'remember_token', 'created_at', 'updated_at']);
         }); 
-
-        // удаляем другие группы
-
-        Schema::dropIfExists('cache');
-        Schema::dropIfExists('cache_locks');
-        Schema::dropIfExists('failed_jobs');
-        Schema::dropIfExists('job_batches');
-        Schema::dropIfExists('jobs');
-        Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('sessions');
 
         //группы
         Schema::create('groups', function (Blueprint $table) {
@@ -81,9 +69,6 @@ return new class extends Migration
                 ->onDelete('cascade');
 
             $table->date('date_of_friendship');
-
-            
-            // $table->unique(['user1_id', 'user2_id']);
         });
 
         DB::statement('ALTER TABLE friends
@@ -121,7 +106,7 @@ return new class extends Migration
         
         
         if (Schema::hasTable('friends')) {
-             DB::statement('ALTER TABLE friends DROP CONSTRAINT IF EXISTS friends_self_check');
+            DB::statement('ALTER TABLE friends DROP CONSTRAINT IF EXISTS friends_self_check');
             DB::statement('DROP INDEX IF EXISTS friends_pair_unique_idx');
         }
         
