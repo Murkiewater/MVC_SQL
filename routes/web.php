@@ -20,3 +20,5 @@ Route::get('/user/{id}', [UsersController::class, 'show']);
 
 Route::get('/user-groups/{id}', [UserGroupsController::class, 'show'])->name('user_groups.show');
 Route::get('/group-users/{id}', [GroupUsersController::class, 'show'])->name('group_users.show');
+
+Route::resource('post-in-groups', \App\Http\Controllers\PostInGroupsController::class);

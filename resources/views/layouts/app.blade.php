@@ -13,7 +13,8 @@
     <h1>demo app</h1>
     <nav>
         <a href="{{ route('users.index') }}">Users</a> |
-        <a href="{{ route('groups.index') }}">Groups</a>
+        <a href="{{ route('groups.index') }}">Groups</a> |
+        <a href="{{ route('post-in-groups.index') }}">Posts</a>
     </nav>
     <hr>
     @yield('content')

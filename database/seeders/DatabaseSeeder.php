@@ -10,12 +10,9 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        Users::factory(3)->create();
+        Users::factory(10)->create();
 
         Groups::insert([
             ['name' => 'Администраторы'],
@@ -49,9 +46,25 @@ class DatabaseSeeder extends Seeder
                     ]
                 );
             }
-        }    
+        }
         
-        PostInGroups::create([
+        foreach ($allGroups as $group) {
+            $memberIds = $group->users()->pluck('users.id');
+            for ($i = 0; $i < rand(3, 8); $i++) {
+                if ($memberIds->isEmpty()) break;
+
+                $authorId = $memberIds->random();
+
+                PostInGroups::create([
+                    'user_id'      => $authorId,
+                    'group_id'     => $group->id,
+                    'text'         => fake()->realText(rand(60, 140)),
+                    'date_of_post' => now()->subDays(rand(0, 30))->subMinutes(rand(0, 1440)),
+                ]);
+            }
+        }
+        
+        PostInGroups::firstOrCreate([
             'user_id' => 1,
             'group_id' => 2,
             'text' => 'Всем привет, я жертва бета-теста',
