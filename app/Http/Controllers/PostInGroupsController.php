@@ -7,11 +7,12 @@ use Illuminate\Http\Request;
 
 class PostInGroupsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $perpage = $request->perpage ?? 2;
         $posts = PostInGroups::with(['user','group'])
                   ->latest('date_of_post')
-                  ->paginate(20);
+                  ->paginate($perpage)->withQueryString();
 
         return view('post_in_groups.index', compact('posts'));
     }
