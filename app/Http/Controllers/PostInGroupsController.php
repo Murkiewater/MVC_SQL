@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PostInGroups;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PostInGroupsController extends Controller
 {
@@ -41,6 +42,10 @@ class PostInGroupsController extends Controller
 
     public function edit(PostInGroups $postInGroup)
     {
+        if (! Gate::allows('edit-post', $postInGroup)) {
+            return redirect()->route('post-in-groups.index')->with('message',
+            'У вас нет прав на редактирование поста номер ' . $postInGroup->id);
+        }
         return view('post_in_groups.edit', compact('postInGroup'));
     }
 
@@ -61,6 +66,11 @@ class PostInGroupsController extends Controller
 
     public function destroy(PostInGroups $postInGroup)
     {
+        if (! Gate::allows('destroy-post', $postInGroup)) {
+            return redirect()->route('post-in-groups.index')->with('message',
+            'У вас нет разрешений для удаления поста номер '. $postInGroup->id);
+        }
+        
         $postInGroup->delete();
 
         return redirect()->route('post-in-groups.index')

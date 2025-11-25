@@ -12,6 +12,12 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        Users::factory()->create([
+            'full_name' => 'Admin User',
+            'email' => 'admin@test.com',
+            'password' => '$2y$10$b6AHpXuHCajccfdonZaoruUoajaCkzAEL81g0gSAEl9uMCR1sScL6',
+        ]);
+        
         Users::factory(10)->create();
 
         Groups::insert([
@@ -63,6 +69,13 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
+
+        PostInGroups::create([
+            'user_id'      => 1,
+            'group_id'     => 2,
+            'text'         => 'над этим постом проводятся махинации',
+            'date_of_post' => now(),
+        ]);
         
         PostInGroups::firstOrCreate([
             'user_id' => 1,
