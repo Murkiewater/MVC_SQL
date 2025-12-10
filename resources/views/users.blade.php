@@ -1,18 +1,45 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2>Пользователи</h2>
-    @if($Users->isEmpty())
-        <p>Нет пользователей.</p>
-    @else
-        @foreach($Users as $u)
-            <div class="card" style="padding:10px;margin-bottom:8px;">
-                <a href="{{ url('/user/' . ($u->id ?? $u['id'] ?? '#')) }}">
-                    <strong>{{ $u->full_name ?? $u->name ?? ('User ' . ($u->id ?? '')) }}</strong>
-                </a>
-                <div style="font-size:13px;color:#666">id: {{ $u->id ?? '-' }}</div>
-                <div style="font-size:13px;color:#666">email: {{ $u->email ?? '-' }}</div>
+    <div class="page-content-wrapper"> 
+        <h2>Пользователи</h2>
+
+        @if($Users->isEmpty())
+            <p class="alert alert-info">Нет зарегистрированных пользователей.</p>
+        @else
+            <div class="main-content-area">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Полное имя</th>
+                            <th>Email</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($Users as $u)
+                            <tr>
+                                {{-- ID --}}
+                                <td>{{ $u->id ?? '-' }}</td>
+                                
+                                <td>
+                                    <a href="{{ url('/user/' . ($u->id ?? '#')) }}" class="table-link">
+                                        {{ $u->full_name ?? $u->name ?? ('User ' . ($u->id ?? '')) }}
+                                    </a>
+                                </td>
+                                
+                                <td>{{ $u->email ?? '-' }}</td>
+                                <td style="white-space: nowrap;">
+                                    <a href="{{ url('/user/' . ($u->id ?? '#')) }}" class="btn-table-action view-btn">
+                                        Просмотр
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-        @endforeach
-    @endif
+        @endif
+    </div>
 @endsection

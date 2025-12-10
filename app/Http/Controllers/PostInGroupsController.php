@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PostInGroups;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class PostInGroupsController extends Controller
 {
@@ -26,13 +27,13 @@ class PostInGroupsController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'user_id'      => ['required','exists:users,id'],
             'group_id'     => ['required','exists:groups,id'],
             'text'         => ['required','string'],
             'date_of_post' => ['nullable','date'],
         ]);
 
-        $data['date_of_post'] = $data['date_of_post'] ?? now();
+        $data['user_id'] = Auth::id();
+        $data['date_of_post'] = now();
 
         PostInGroups::create($data);
 
@@ -52,8 +53,6 @@ class PostInGroupsController extends Controller
     public function update(Request $request, PostInGroups $postInGroup)
     {
         $data = $request->validate([
-            'user_id'      => ['required','exists:users,id'],
-            'group_id'     => ['required','exists:groups,id'],
             'text'         => ['required','string'],
             'date_of_post' => ['nullable','date'],
         ]);

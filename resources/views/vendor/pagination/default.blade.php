@@ -1,55 +1,58 @@
 @if ($paginator->hasPages())
-    <nav>
-        <ul class="pagination">
-            {{-- Previous Page Link --}}
+    <nav class="pagination-container" role="navigation" aria-label="Pagination Navigation">
+        
+        <div class="pagination-links">
             @if ($paginator->onFirstPage())
-                <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
+                <span class="page-link disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
                     <span aria-hidden="true">&lsaquo;</span>
-                </li>
+                </span>
             @else
-                <li>
-                    <a href="{{ $paginator->previousPageUrl() }}" rel="prev" aria-label="@lang('pagination.previous')">&lsaquo;</a>
-                </li>
+                <a href="{{ $paginator->previousPageUrl() }}" class="page-link" rel="prev" aria-label="@lang('pagination.previous')">
+                    &lsaquo;
+                </a>
             @endif
 
-            {{-- Pagination Elements --}}
             @foreach ($elements as $element)
-                {{-- "Three Dots" Separator --}}
                 @if (is_string($element))
-                    <li class="disabled" aria-disabled="true"><span>{{ $element }}</span></li>
+                    <span class="page-link separator" aria-disabled="true">{{ $element }}</span>
                 @endif
 
-                {{-- Array Of Links --}}
                 @if (is_array($element))
                     @foreach ($element as $page => $url)
                         @if ($page == $paginator->currentPage())
-                            <li class="active" aria-current="page"><span>{{ $page }}</span></li>
+                            <span aria-current="page" class="page-link active">{{ $page }}</span>
                         @else
-                            <li><a href="{{ $url }}">{{ $page }}</a></li>
+                            <a href="{{ $url }}" class="page-link">{{ $page }}</a>
                         @endif
                     @endforeach
                 @endif
             @endforeach
 
-            {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
-                <li>
-                    <a href="{{ $paginator->nextPageUrl() }}" rel="next" aria-label="@lang('pagination.next')">&rsaquo;</a>
-                </li>
+                <a href="{{ $paginator->nextPageUrl() }}" class="page-link" rel="next" aria-label="@lang('pagination.next')">
+                    &rsaquo;
+                </a>
             @else
-                <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
+                <span class="page-link disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
                     <span aria-hidden="true">&rsaquo;</span>
-                </li>
+                </span>
             @endif
-            Элементов на странице:
-            <form method="get" action={{ url('post-in-groups') }}>
-                <select name="perpage">
-                    <option value="2" @if ($paginator->perPage() == 2) selected @endif>2</option>
-                    <option value="3" @if ($paginator->perPage() == 3) selected @endif>3</option>
-                    <option value="4" @if ($paginator->perPage() == 3) selected @endif>4</option>
+        </div>
+        
+        <div class="per-page-form-container">
+            <span class="per-page-label">Элементов на странице:</span>
+            <form method="get" action="{{ url()->current() }}">
+                <select name="perpage" class="per-page-select">
+                    @foreach([2, 3, 4, 5, 10, 20] as $perPageOption)
+                        <option value="{{ $perPageOption }}" 
+                                @if ($paginator->perPage() == $perPageOption) selected @endif>
+                            {{ $perPageOption }}
+                        </option>
+                    @endforeach
                 </select>
-                <input type="submit" value="Изменить">
+                <input type="submit" value="Изменить" class="btn-per-page-submit">
             </form>
-        </ul>
+        </div>
+
     </nav>
 @endif

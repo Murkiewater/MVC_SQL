@@ -17,6 +17,12 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@test.com',
             'password' => '$2y$10$b6AHpXuHCajccfdonZaoruUoajaCkzAEL81g0gSAEl9uMCR1sScL6',
         ]);
+
+        Users::factory()->create([
+            'full_name' => 'Forgot Again',
+            'email' => 'forgot@test.com',
+            'password' => '$2y$10$2omwiM7oXspD2diIiRZJA.6c2lzJkepCwlIrw1BVeKPJOB3n/Y5lq',
+        ]);
         
         Users::factory(10)->create();
 

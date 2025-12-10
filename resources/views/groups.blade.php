@@ -1,17 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2>Группы</h2>
-    @if($Groups->isEmpty())
-        <p>Нет групп.</p>
-    @else
-        @foreach($Groups as $g)
-            <div class="card" style="padding:10px;margin-bottom:8px;">
-                <a href="{{ url('/group/' . ($g->id ?? '#')) }}">
-                    <strong>{{ $g->name ?? ('Group ' . ($g->id ?? '')) }}</strong>
-                </a>
-                <div style="font-size:13px;color:#666">id: {{ $g->id ?? '-' }}</div>
+    <div class="page-content-wrapper"> 
+        <h2>Группы</h2>
+
+        @if($Groups->isEmpty())
+            <p class="alert alert-info">Нет зарегистрированных групп.</p>
+        @else
+            <div class="main-content-area">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%">ID</th>
+                            <th>Название</th>
+                            <th style="width: 25%">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($Groups as $g)
+                            <tr>
+                                <td>{{ $g->id ?? '-' }}</td>
+                                
+                                <td>
+                                    <a href="{{ url('/group/' . ($g->id ?? '#')) }}" class="table-link">
+                                        {{ $g->name ?? ('Group ' . ($g->id ?? '')) }}
+                                    </a>
+                                </td>
+                                
+                                <td style="white-space: nowrap;">
+                                    <a href="{{ url('/group/' . ($g->id ?? '#')) }}" class="btn-table-action view-btn">
+                                        Просмотр
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-        @endforeach
-    @endif
+        @endif
+    </div>
 @endsection

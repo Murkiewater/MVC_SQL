@@ -20,11 +20,11 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('login');
+            return redirect()->intended('/users')->with('success', 'Добро пожаловать!');
         }
-        return back()->withErrors([
-            'error' => 'Your credentials are not valid based on our records, try again!',
-        ])->onlyInput('email', 'password');
+        return back()
+            ->with('error', 'Вы ввели неверные данные. Попробуйте снова!.')
+            ->onlyInput('email', 'password');
     }
 
     public function login(Request $request)

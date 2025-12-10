@@ -1,21 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Посты в группах</h1>
-
-<a href="{{ route('post-in-groups.create') }}" class="btn btn-success mb-3">Создать новый пост</a>
-
-@if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-@endif
 
 @if(session('message'))
-    <div class="alert alert-danger">
+    <div class="alert alert-error">
         {{ session('message') }}
     </div>
 @endif
+<h2>Посты</h2>
 
-<table class="table table-bordered table-striped">
+<table class="data-table">
     <thead>
         <tr>
             <th>ID</th>
@@ -34,9 +28,10 @@
             <td>{{ optional($p->group)->name ?? '—' }}</td>
             <td>{{ Str::limit($p->text, 80) }}</td>
             <td>{{ \Carbon\Carbon::parse($p->date_of_post)->format('d.m.Y H:i') }}</td>
-            <td>
-                <form action="{{ route('post-in-groups.edit', $p) }}" method="GET" style="display:inline;">
-                    <button type="submit" class="btn btn-sm btn-primary">
+            <td style="white-space: nowrap;">
+                
+                <form action="{{ route('post-in-groups.edit', $p) }}" method="GET">
+                    <button type="submit" class="btn-action btn-action-edit">
                         Редактировать
                     </button>
                 </form>
@@ -47,7 +42,7 @@
                       onsubmit="return confirm('Удалить этот пост?');">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-danger">
+                    <button type="submit" class="btn-action btn-action-delete">
                         Удалить
                     </button>
                 </form>
@@ -56,6 +51,9 @@
     @endforeach
     </tbody>
 </table>
+<a href="{{ route('post-in-groups.create') }}" class="btn-custom">
+    Создать новый пост
+</a>
 
 {{ $posts->links() }}
 @endsection
