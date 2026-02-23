@@ -478,7 +478,7 @@ input[type="datetime-local"] {
 }
 
 input[type="datetime-local"]:focus {
-    border-color: var(--brand-cyan, #0ababa); /* Бирюзовый акцент */
+    border-color: var(--brand-cyan, #0ababa); 
     outline: none;
     box-shadow: 0 0 0 0.2rem rgba(10, 186, 181, 0.25); 
 }
@@ -494,7 +494,7 @@ input[type="datetime-local"]:focus {
 .user-info-card {
     width: 300px;
     margin-bottom: 30px;
-    padding: 20px 30px; /* Увеличим отступы */
+    padding: 20px 30px;
 }
 
 .user-info-card .info-row {
@@ -512,13 +512,11 @@ input[type="datetime-local"]:focus {
     color: var(--text-secondary, #666);
 }
 
-/* Стили для таблиц в секциях (Группы, Друзья) */
 .data-table.small-table {
     margin-bottom: 30px;
     font-size: 15px;
 }
 
-/* Стилизация карточки поста */
 .post-card {
     background-color: var(--white);
     padding: 15px;

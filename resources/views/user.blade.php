@@ -92,7 +92,6 @@
                 @foreach($posts as $p)
                     <div class="post-card">
                         <div class="post-meta">
-                            {{-- Группа --}}
                             <div class="meta-item">
                                 <strong>Группа:</strong>
                                 @if(isset($p->group))

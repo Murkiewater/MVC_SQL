@@ -20,7 +20,6 @@
                     <tbody>
                         @foreach($Users as $u)
                             <tr>
-                                {{-- ID --}}
                                 <td>{{ $u->id ?? '-' }}</td>
                                 
                                 <td>

@@ -23,7 +23,7 @@ class LoginController extends Controller
             return redirect()->intended('/users')->with('success', 'Добро пожаловать!');
         }
         return back()
-            ->with('error', 'Вы ввели неверные данные. Попробуйте снова!.')
+            ->with('error', 'Вы ввели неверные данные. Попробуйте снова!')
             ->onlyInput('email', 'password');
     }
 
