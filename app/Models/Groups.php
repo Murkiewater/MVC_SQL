@@ -11,6 +11,7 @@ class Groups extends Model
 
     protected $fillable = [
         'name',
+        'picture_url',
     ];
 
     protected $table = 'groups';
