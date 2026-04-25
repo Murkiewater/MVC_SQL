@@ -26,6 +26,14 @@ class AuthServiceProvider extends ServiceProvider
             return true;
         });
 
+        Gate::define('destroy-group', function (Users $user, Groups $group) {
+            return $user->id === $group->user_id || $user->is_admin;
+        });
+
+        Gate::define('update-group', function (Users $user) {
+            return $user->is_admin;
+        });
+
         Gate::define('create-user', function (Users $user) {
             return true;
         });

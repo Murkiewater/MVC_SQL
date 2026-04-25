@@ -14,14 +14,21 @@ class UsersControllerApi extends Controller
      */
     public function index(Request $request)
     {
-        return response(Users::limit($request->perpage ?? 5)
-        ->offset(($request->perpage ?? 5) * ($request->page ?? 0))
-        ->get());
+        $search = strtolower($request->search ?? '');
+
+        return response(
+            Users::query()
+                ->where('full_name', 'ILIKE', ['%' . preg_replace('/\s+/', '%', strtolower($search)) . '%'])
+                ->limit($request->perpage ?? 5)
+                ->offset(($request->page ?? 0) * ($request->perpage ?? 5))
+                ->get()
+        );
     }
 
-    public function total()
+    public function total(Request $request)
     {
-        return response(Users::all()->count());
+        return response(Users::where('full_name', 'ILIKE', '%'.$request->search.'%')
+            ->count());
     }
 
     /**
@@ -58,7 +65,7 @@ class UsersControllerApi extends Controller
         $user = new Users($validated);
         $user->picture_url = $file_url;
         $user->save();
-        
+
         return response()->json([
             'code' => 0,
             'message' => 'Пользователь был успешно добавлен',
