@@ -19,6 +19,8 @@ class Users extends Authenticatable
         'picture_url'
     ];
 
+    protected $hidden = ['password', 'remember_token'];
+
     protected $casts = [
         'password' => 'hashed',
     ];
